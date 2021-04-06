@@ -1,0 +1,129 @@
+<html>
+<head>
+<title> Sentiment Analyzer </title>
+
+<style>
+body{
+margin: 1em;
+padding: 1em;
+font-family:verdana;
+}
+
+input[type="text"]{  
+                text-align: center; 
+            }
+
+input[type="text"], textarea {
+
+  background-color : #FFFF50; 
+
+}			
+.Row {
+    display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    border-spacing: 10px; /*Optional*/
+}
+.Column {
+    display: table-cell;
+    
+}			
+
+
+.button {
+ font-family: verdana;
+  background-color: #FFFF50; 
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: #FFFF50; 
+  color: black; 
+  border: 3px solid black;
+  
+}
+
+div.note {
+  font-size: 11px;
+}	
+
+
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}	
+</style>
+
+
+</head>
+
+<body bgcolor="#E6E6FA">
+
+
+<div>
+
+	<div>
+		<form action = "{{url_for('result')}}" method = "post">
+			<center><input type = "text" name = "text" placeholder = "Enter your text"  required= "required" style="font-size: 18pt; height: 40px; width:500px; "><br><br>
+			<button class="button button1" type= "submit"> Check Sentiment </button>
+			<a href="{{url_for('home')  }}">Reset </a>
+			</center>
+			
+
+		</form>
+	</div>
+
+	<div>
+		<center><h5>{{sentiment_text}}</h5></center>
+	</div>
+	<br><br>
+	<div class="Row">
+	<center> 
+		<div class="Column">
+			<img src= '{{ url_for('static', filename= 'sad_emoji.png') }}' width="120" height="120"></img>
+			<h5>Negative   </h5>
+			<h3>{{negative_value}} % </h3>
+		</div>
+		<div class="Column">
+			<img src= '{{ url_for('static', filename= 'neutral_emoji.png') }}' width="120" height="120"></img>
+			<h5>Neutral   </h5>
+			<h3>{{neutral_value}} % </h3>
+		</div>
+		<div class="Column">
+			<img src= '{{ url_for('static', filename= 'happy_emoji.png') }}' width="120" height="120"></img>
+			<h5>Positive   </h5>
+			<h3>{{positive_value}} % </h3>
+		</div>
+	</center>
+	</div>
+	<center>
+		<h5> Overall Sentiment: </h5> <h3>{{overall_value}} </h3>
+	</center>
+	<br>
+	
+	<div class="note">
+	Developed & Designed by: <br>
+	<i>Sumit Srivastava </i><br>
+	sumvast@gmail.com
+	</div>
+	
+	
+</div>
+</body>
+</html>
