@@ -1,53 +1,28 @@
-from flask import Flask, render_template, request, url_for, redirect
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from flask import jsonify
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Apr  6 12:44:47 2021
+
+@author: Sumit
+"""
+
+from flask import Flask, jsonify
 from azure.storage.blob import BlobClient
 import os
 import pickle
 import json
 
-vader = SentimentIntensityAnalyzer()
-
-
-
-app= Flask(__name__)
-
+app = Flask(__name__)
 
 @app.route('/')
-def home():
-    return render_template('home.html')
-
-
-@app.route('/result', methods=['POST'])
-def result():
-    raw_text= [str(x) for x in request.form.values()]
-    text= [raw_text]
-
-    sentiment_result= vader.polarity_scores(text[0][0])
-    negative_value = round(sentiment_result['neg']*100,2)
-    neutral_value = round(sentiment_result['neu']*100,2)
-    positive_value = round(sentiment_result['pos']*100,2)
-    compound_value = sentiment_result['compound']
-    if compound_value >= 0.05:
-        overall_value= "Positive"
-    elif compound_value <= -0.05:
-        overall_value= "Negative"
-    else:
-        overall_value= "Neutral"
-
-    return render_template('home.html', sentiment_text= text[0][0],
-                           sentiment_result= sentiment_result,
-                           negative_value= negative_value,
-                           neutral_value= neutral_value,
-                           positive_value= positive_value,
-                           compound_value= abs(round(compound_value,2)),
-                           overall_value=overall_value
-                           )
+def hello_world():
+    return 'Hello, World!'
 
 
 @app.route('/arima-api/<int:n>')
 def arima_api(n):
     no_of_steps= n
+    
+    print(no_of_steps)
      
     blob = BlobClient(account_url="https://sumitfilestorage.blob.core.windows.net",
                       container_name="model-container",
@@ -67,8 +42,7 @@ def arima_api(n):
     
     
     return str(output)
-
-
+    
 @app.route('/arima-meta')
 def arima_meta():
     blob = BlobClient(account_url="https://sumitfilestorage.blob.core.windows.net",
@@ -87,5 +61,6 @@ def arima_meta():
     
     
 
-if __name__ == '__main__':
+
+if __name__== "__main__":
     app.run(debug=True)
