@@ -16,7 +16,7 @@ import json
 app = Flask(__name__)
 
 
-@app.route('/api/', methods=['POST'])
+@app.route('/api/', methods=['POST', 'GET'])
 def arimaforecast():
     data = request.get_json()  
     
